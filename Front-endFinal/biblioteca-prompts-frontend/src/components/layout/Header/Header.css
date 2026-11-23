@@ -1,0 +1,776 @@
+/* Container Principal do Header */
+.app-header {
+    background: linear-gradient(to right, #1e3a8a, #3b82f6);
+    /* Azul institucional */
+    color: white;
+    padding: 0.8rem 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* LOGO (Substitui o ícone do foguete) */
+.header-logo-img {
+    height: 45px;
+    /* Altura fixa controlada */
+    width: auto;
+    /* Largura se ajusta automaticamente */
+    max-width: 180px;
+    /* Impede que fique larga demais se o logo for comprido */
+    object-fit: contain;
+    /* Garante que a imagem caiba no espaço sem cortar */
+    display: block;
+    /* Remove comportamentos estranhos de linha */
+}
+
+/* Ajuste para celular */
+@media (max-width: 768px) {
+    .header-logo-img {
+        height: 35px;
+        /* Um pouco menor no celular para não quebrar o layout */
+    }
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Logo Area */
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo-icon {
+    font-size: 2rem;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.logo-text h1 {
+    font-size: 1.4rem;
+    margin: 0;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.logo-text p {
+    font-size: 0.8rem;
+    margin: 0;
+    opacity: 0.8;
+}
+
+/* Área do Usuário */
+.user-area {
+    position: relative;
+    /* Importante para o dropdown posicionar corretamente */
+}
+
+.user-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 6px 12px;
+    border-radius: 50px;
+    cursor: pointer;
+    color: white;
+    transition: all 0.2s ease;
+}
+
+.user-btn:hover,
+.user-btn.active {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.user-avatar {
+    width: 35px;
+    height: 35px;
+    background: #f59e0b;
+    /* Laranja destaque */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: #fff;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.user-name {
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.arrow-icon {
+    font-size: 0.7rem;
+    opacity: 0.7;
+}
+
+/* --- MENU DROPDOWN --- */
+.user-dropdown {
+    position: absolute;
+    top: 120%;
+    right: 0;
+    width: 280px;
+    background: var(--card-bg);
+    color: var(--text);
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    animation: slideDown 0.2s ease;
+    border: 1px solid #e2e8f0;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dropdown-header {
+    background: #f8fafc;
+    padding: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.dropdown-header strong {
+    display: block;
+    font-size: 1rem;
+    color: var(--text);
+}
+
+.dropdown-header span {
+    font-size: 0.85rem;
+    color: #64748b;
+}
+
+.dropdown-body {
+    padding: 1rem;
+}
+
+.info-item {
+    margin-bottom: 1rem;
+}
+
+.info-item label {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #94a3b8;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+}
+
+.info-item p {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.badge-role {
+    background: #dbeafe;
+    color: #1e40af;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.dropdown-footer {
+    padding: 0.8rem;
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+}
+
+.btn-logout {
+    width: 100%;
+    padding: 8px;
+    background: white;
+    border: 1px solid #cbd5e1;
+    color: #ef4444;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-logout:hover {
+    background: #fef2f2;
+    border-color: #ef4444;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .user-name {
+        display: none;
+    }
+
+    /* Esconde nome no mobile */
+    .logo-text p {
+        display: none;
+    }
+}
+
+/* ==========================================================================
+   INTERIOR DO MENU DROPDOWN (ESTILIZAÇÃO)
+   ========================================================================== */
+
+/* Garante que o container principal esteja correto */
+.floating-user-dropdown {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    width: 290px;
+    background: #ffffff !important;
+    border-radius: 20px;
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(0, 0, 0, 0.04);
+    z-index: 9999;
+    overflow: hidden;
+    color: #1e293b !important;
+    border: none !important;
+    animation: slideDown 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Barra gradiente azul no topo do dropdown */
+.floating-user-dropdown::before {
+    content: '';
+    display: block;
+    height: 5px;
+    background: linear-gradient(135deg, #3b82f6 0%, #667eea 50%, #818cf8 100%);
+    border-radius: 20px 20px 0 0;
+}
+
+/* 1. Cabeçalho (Nome e Ocupação) */
+.dropdown-header-info {
+    padding: 1.4rem 1.6rem 1.2rem;
+    background: #ffffff !important;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.dropdown-header-info strong {
+    display: block;
+    font-size: 1.15rem;
+    color: #0f172a !important;
+    margin-bottom: 4px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+}
+
+.dropdown-header-info span {
+    color: #94a3b8 !important;
+    font-size: 0.9rem;
+    font-weight: 400;
+}
+
+/* 2. Corpo (Unidade e Função) */
+.dropdown-body-content {
+    padding: 1.4rem 1.6rem;
+    background: #ffffff !important;
+}
+
+.info-group {
+    margin-bottom: 1.2rem;
+}
+
+.info-group:last-child {
+    margin-bottom: 0;
+}
+
+.info-group label {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #6366f1 !important;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.8px;
+}
+
+.info-group p {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #0f172a !important;
+}
+
+/* Badge estilizada para a função */
+.function-badge {
+    background: #eff6ff !important;
+    color: #3b82f6 !important;
+    padding: 8px 18px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-block;
+    border: 1px solid #dbeafe;
+    letter-spacing: 0.2px;
+}
+
+/* 3. Rodapé e Botões */
+.dropdown-footer-actions {
+    padding: 1.2rem 1.6rem;
+    border-top: 1px solid #f1f5f9;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    background: #fafbfd !important;
+}
+
+.action-item {
+    width: 100%;
+    padding: 0.85rem;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    font-family: 'Sora', sans-serif;
+    transition: all 0.2s ease;
+}
+
+/* Estilo do botão de Relatório */
+.action-item.report {
+    background: #ffffff !important;
+    color: #475569 !important;
+    border: 1px solid #cbd5e1;
+}
+
+.action-item.report:hover {
+    background: #f1f5f9 !important;
+    color: #1e293b !important;
+}
+
+/* Estilo do botão Sair */
+.action-item.logout {
+    background: #ffffff !important;
+    color: #ef4444 !important;
+    border: 1.5px solid #fecaca;
+}
+
+.action-item.logout:hover {
+    background: #fef2f2 !important;
+    border-color: #ef4444;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.15);
+}
+
+
+
+/* ==========================================================================
+   HEADER PRINCIPAL (RECUPERADO E MELHORADO)
+   ========================================================================== */
+
+.app-header {
+    background: linear-gradient(135deg, #123860 0%, #667eea 100%);
+    padding: 1.2rem 0;
+    /* Mais alto, para respirar */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Lado Esquerdo */
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.menu-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.menu-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.logo-img-container {
+    background: white;
+    /* Fundo branco para a logo da DGTI destacar */
+    padding: 5px 10px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.header-logo-img {
+    height: 35px;
+    width: auto;
+    object-fit: contain;
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-text h1 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: white;
+    margin: 0;
+    line-height: 1.1;
+}
+
+.logo-text p {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+}
+
+/* Lado Direito */
+.user-area {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.btn-relatorio {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 8px 16px;
+    border-radius: 50px;
+    color: white;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-relatorio:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 5px 15px 5px 5px;
+    border-radius: 50px;
+    backdrop-filter: blur(10px);
+}
+
+.user-avatar {
+    width: 35px;
+    height: 35px;
+    background: #f59e0b;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: white;
+}
+
+.user-name {
+    color: white;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+/* Responsivo para Celular */
+@media (max-width: 768px) {
+
+    .logo-text p,
+    .user-name,
+    .user-name-display,
+    .chevron-icon,
+    .btn-relatorio {
+        display: none !important;
+        /* Esconde para não quebrar no celular */
+    }
+
+    .logo-area {
+        gap: 0.8rem;
+    }
+
+    .logo-text h1 {
+        font-size: 1.1rem;
+    }
+
+    .user-info {
+        padding: 5px;
+        /* Deixa só a bolinha laranja no celular */
+    }
+
+    /* Transforma o botão do usuário em apenas um círculo no celular */
+    .user-profile-button {
+        padding: 0 !important;
+        border: none !important;
+        background: transparent !important;
+        gap: 0 !important;
+    }
+}
+/* 1. Botão hambúrguer menor e elegante */
+.side-menu-trigger {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+    padding: 6px;
+    /* Reduzido */
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+/* Diminuindo o ícone dentro do botão se necessário */
+.side-menu-trigger svg {
+    width: 22px;
+    /* Era 28, agora está mais discreto */
+    height: 22px;
+}
+
+.side-menu-trigger:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* 2. Correção Crítica: O Dropdown flutuando para fora */
+.user-menu-wrapper {
+    position: relative;
+    /* Isso cria a "âncora" para o dropdown */
+}
+
+.floating-user-dropdown {
+    position: absolute;
+    top: calc(100% + 15px);
+    right: 0;
+    width: 290px;
+    background: #ffffff !important;
+    border-radius: 20px;
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(0, 0, 0, 0.04);
+    z-index: 9999;
+    overflow: hidden;
+    color: #1e293b !important;
+    border: none !important;
+}
+
+
+
+
+
+
+/* ==========================================================================
+   BOTÃO DO PERFIL (PÍLULA) E MENU FLUTUANTE
+   ========================================================================== */
+
+/* Garante que o container alinhe tudo corretamente */
+.user-area-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* O Botão principal (Onde está o nome Leonardo Silva) */
+.user-profile-button {
+    display: flex !important;
+    flex-direction: row !important;
+    /* Força ficar um do lado do outro */
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.15);
+    /* Efeito de vidro/transparente */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 6px 16px 6px 6px;
+    /* Espaço interno */
+    border-radius: 50px;
+    /* Deixa totalmente arredondado */
+    cursor: pointer;
+    color: white;
+    transition: all 0.2s ease;
+    font-family: 'Sora', sans-serif;
+}
+
+.user-profile-button:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* A bolinha com as iniciais "LS" */
+.user-avatar-initials {
+    width: 32px;
+    height: 32px;
+    background: #f59e0b;
+    /* Cor Laranja */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: white;
+}
+
+/* O texto do nome */
+.user-name-display {
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: white;
+    white-space: nowrap;
+    /* Impede que o nome quebre em duas linhas */
+}
+
+/* A setinha para baixo */
+.chevron-icon {
+    margin-left: 5px;
+    transition: transform 0.2s;
+    color: white;
+    opacity: 0.8;
+}
+
+
+/* ==========================================================================
+   FIX: VISIBILIDADE DO DROPDOWN (DEPSEN / DGTI)
+   ========================================================================== */
+
+.floating-user-dropdown {
+    background: #ffffff !important;
+    color: #1e293b !important;
+    border: none !important;
+}
+
+/* Rótulo "UNIDADE" e "FUNÇÃO" */
+.info-group label {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #6366f1 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 5px;
+}
+
+/* Texto da Unidade (DEPSEN / DGTI) */
+.unit-text {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #0f172a !important;
+    line-height: 1.3;
+}
+
+/* Texto da Função (Programador) */
+.function-badge {
+    background: #eff6ff !important;
+    color: #3b82f6 !important;
+    padding: 8px 18px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-block;
+    border: 1px solid #dbeafe;
+    letter-spacing: 0.2px;
+}
+
+
+
+
+
+/* ═══════════════════════════════════════════════════════════════
+   SINO PREMIUM: REMOVENDO O CINZA E ADICIONANDO ESTILO
+   ═══════════════════════════════════════════════════════════════ */
+
+.sino-premium-btn {
+    all: unset;
+    /* Mata o fundo cinza e bordas padrão do navegador */
+    position: relative;
+    /* Importante para a bolinha vermelha não fugir */
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    /* Efeito de vidro sutil */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    /* Sino redondo fica mais elegante que quadrado */
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    flex-shrink: 0;
+}
+
+.sino-premium-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+    /* Feedback visual de clique */
+}
+
+/* Bolinha Vermelha com Profundidade */
+.sino-badge-notif {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    background: linear-gradient(135deg, #ff4d4f 0%, #cf1322 100%);
+    color: white;
+    font-size: 10px;
+    font-weight: 800;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Borda da cor do Header para destacar o sino (Padrão Apple/Google) */
+    border: 2px solid #1e3a8a;
+    box-shadow: 0 2px 8px rgba(255, 77, 79, 0.5);
+    padding: 2px;
+}
+
+/* Animação do Sino no Hover */
+.sino-premium-btn:hover .sino-icon {
+    animation: ring-animation 0.6s ease;
+}
+
+@keyframes ring-animation {
+
+    0%,
+    100% {
+        transform: rotate(0);
+    }
+
+    20%,
+    60% {
+        transform: rotate(15deg);
+    }
+
+    40%,
+    80% {
+        transform: rotate(-15deg);
+    }
+}

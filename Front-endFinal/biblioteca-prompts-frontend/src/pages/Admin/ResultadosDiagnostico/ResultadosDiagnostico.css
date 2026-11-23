@@ -1,0 +1,305 @@
+.resultados-diagnostico-container {
+    padding: 2rem;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+/* ==========================================================================
+   HEADER DO DASHBOARD
+   ========================================================================== */
+.dashboard-header-modern {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.dashboard-header-modern h1 {
+    color: var(--text);
+    margin: 0 0 0.5rem 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.dashboard-header-modern p {
+    color: var(--text-muted);
+    margin: 0;
+    font-size: 1rem;
+}
+
+.btn-pdf-export {
+    background: linear-gradient(to right, #1e3a8a, #3b82f6);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+}
+
+.btn-pdf-export:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+}
+
+/* ==========================================================================
+   KPI GRID ISOLADO
+   ========================================================================== */
+.resultados-diagnostico-container .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.resultados-diagnostico-container .kpi-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s;
+}
+
+.resultados-diagnostico-container .kpi-card:hover {
+    transform: translateY(-3px);
+}
+
+.resultados-diagnostico-container .kpi-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.resultados-diagnostico-container .icon-blue { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+.resultados-diagnostico-container .icon-orange { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+.resultados-diagnostico-container .icon-red { background: rgba(239, 68, 68, 0.15); color: #f87171; }
+
+.resultados-diagnostico-container .kpi-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.resultados-diagnostico-container .kpi-value {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+}
+
+.resultados-diagnostico-container .kpi-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ==========================================================================
+   CHARTS ISOLADO
+   ========================================================================== */
+.resultados-diagnostico-container .dashboard-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.resultados-diagnostico-container .chart-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.resultados-diagnostico-container .chart-header {
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 1rem;
+}
+
+.resultados-diagnostico-container .chart-header h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.2rem;
+    color: var(--text);
+    margin: 0;
+}
+
+/* ==========================================================================
+   DATATABLE
+   ========================================================================== */
+
+.table-header-admin {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+}
+
+.table-header-admin h2 {
+    color: var(--text);
+    margin: 0 0 0.5rem 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.table-header-admin p {
+    color: var(--text-muted);
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.btn-refresh {
+    background: rgba(59, 130, 246, 0.1) !important;
+    color: #60a5fa !important;
+    border: 1px solid rgba(59, 130, 246, 0.3) !important;
+    transition: all 0.2s ease !important;
+}
+
+.btn-refresh:hover {
+    background: rgba(59, 130, 246, 0.2) !important;
+    transform: rotate(15deg);
+}
+
+.card-admin-table {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border);
+}
+
+/* Customização Premium da DataTable para o Tema Escuro */
+.p-datatable-admin .p-datatable-header {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 0 1rem 0 !important;
+}
+
+.p-datatable-admin .p-datatable-thead > tr > th {
+    background: rgba(255, 255, 255, 0.03) !important;
+    color: var(--text-muted) !important;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    border-top: none !important;
+    border-bottom: 1px solid var(--border) !important;
+    padding: 1rem !important;
+}
+
+/* UX: Aproxima o ícone de ordenação (setas) do texto da coluna */
+.p-datatable-admin .p-datatable-thead > tr > th .p-column-header-content {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+}
+
+.p-datatable-admin .p-datatable-thead > tr > th[style*="text-align: center"] .p-column-header-content {
+    justify-content: center !important;
+}
+
+.p-datatable-admin .p-datatable-thead > tr > th .p-column-title {
+    flex: 0 0 auto !important;
+}
+
+.p-datatable-admin .p-datatable-tbody > tr {
+    background: transparent !important;
+    color: var(--text) !important;
+    transition: background-color 0.2s !important;
+}
+
+.p-datatable-admin.p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.015) !important;
+}
+
+.p-datatable-admin .p-datatable-tbody > tr:hover {
+    background: rgba(59, 130, 246, 0.05) !important;
+}
+
+.p-datatable-admin .p-datatable-tbody > tr > td {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    padding: 0.4rem 1rem !important;
+    font-size: 0.9rem !important;
+}
+
+/* Tags e Badges */
+.custom-tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.custom-tech-tag {
+    background: rgba(59, 130, 246, 0.15) !important;
+    color: #60a5fa !important;
+    border-radius: 6px !important;
+    padding: 0.3rem 0.6rem !important;
+    font-size: 0.75rem !important;
+    border: 1px solid rgba(59, 130, 246, 0.2) !important;
+}
+
+.horas-badge {
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    padding: 0.4rem 0.8rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    display: inline-block;
+}
+
+/* Paginator */
+.p-datatable-admin .p-paginator {
+    background: transparent !important;
+    border: none !important;
+    border-top: 1px solid var(--border) !important;
+    padding: 1rem 0 0 0 !important;
+}
+
+.p-datatable-admin .p-paginator .p-paginator-pages .p-paginator-page {
+    color: var(--text-muted) !important;
+    border-radius: 50% !important;
+}
+
+.p-datatable-admin .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+    background: rgba(59, 130, 246, 0.2) !important;
+    color: #60a5fa !important;
+    border-color: transparent !important;
+}
+
+/* Customização do Dropdown do Paginator (Fix de Posicionamento e Alinhamento) */
+.p-paginator-rpp-options .p-dropdown-label {
+    text-align: center !important;
+    padding-left: 1rem !important; /* Empurra o número para o centro exato compensando a seta na direita */
+    padding-right: 0 !important;
+}
+
+.p-paginator-rpp-options .p-dropdown-panel {
+    border-radius: 8px;
+    background: var(--card-bg) !important;
+    border: 1px solid var(--border) !important;
+}
+
+.p-paginator-rpp-options .p-dropdown-item {
+    justify-content: center !important;
+    text-align: center !important;
+}

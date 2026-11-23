@@ -1,0 +1,29 @@
+=== VERSOES DE REFERENCIA ===
+
+Versoes com as quais a stack foi validada. Servem como parametro de comparacao
+ao investigar problemas de ambiente — nao sao versoes minimas obrigatorias.
+
+Docker Engine           29.2.0
+Docker Compose          v5.0.2
+PostgreSQL              16.14  (imagem pgvector/pgvector:pg16)
+Keycloak                imagem quay.io/keycloak/keycloak:latest
+Open WebUI              imagem ghcr.io/open-webui/open-webui:main
+Docling Serve           imagem quay.io/docling-project/docling-serve-cpu:latest
+Nginx                   1.31.2  (proxy OIDC e servidor do frontend)
+Ollama (local)          0.30.10
+Ollama (servidor)       0.14.2
+
+Sistema operacional do host: validado em Windows 11 e em Ubuntu 24.04 LTS.
+
+
+=== CONTAINERS DA STACK ===
+
+biblioteca-prompts-postgres     pgvector/pgvector:pg16
+biblioteca-prompts-keycloak     quay.io/keycloak/keycloak:latest
+biblioteca-prompts-oidc-proxy   nginx:alpine
+biblioteca-prompts-backend      build local (./biblioteca-prompts-api)
+biblioteca-prompts-frontend     build local (./Front-endFinal/biblioteca-prompts-frontend)
+biblioteca-prompts-docling      quay.io/docling-project/docling-serve-cpu:latest
+biblioteca-prompts-open-webui   ghcr.io/open-webui/open-webui
+
+Conferir o estado com:  docker-compose ps

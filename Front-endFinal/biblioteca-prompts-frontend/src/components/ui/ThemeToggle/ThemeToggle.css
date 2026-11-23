@@ -1,0 +1,128 @@
+.theme-toggle-container {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+/* Hover - Mesmo estilo dos itens do menu */
+.theme-toggle:hover {
+  background: var(--info-bg, rgba(59, 130, 246, 0.1));
+  color: var(--info, #3b82f6);
+}
+
+/* Icon Wrapper */
+.toggle-icon-wrapper {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Icon */
+.toggle-icon {
+  transition: transform 0.3s ease, color 0.2s ease;
+}
+
+.theme-toggle:hover .toggle-icon {
+  transform: rotate(15deg);
+  color: var(--info, #3b82f6);
+}
+
+/* Label */
+.theme-label {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+/* Active State (quando hover) */
+.theme-toggle:active {
+  transform: scale(0.98);
+}
+
+/* Focus (acessibilidade) */
+.theme-toggle:focus {
+  outline: 2px solid var(--info, #3b82f6);
+  outline-offset: 2px;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   ADAPTAÇÃO PARA TEMA CLARO
+   ════════════════════════════════════════════════════════════════ */
+
+[data-theme='light'] .theme-toggle {
+  color: var(--text-secondary);
+}
+
+[data-theme='light'] .theme-toggle:hover {
+  background: var(--info-bg);
+  color: var(--info);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   VERSÃO PARA HEADER (SE USAR FORA DO MENU)
+   ════════════════════════════════════════════════════════════════ */
+
+.header-actions .theme-toggle {
+  width: auto;
+  padding: 0.5rem 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+}
+
+.header-actions .theme-toggle:hover {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   VERSÃO COMPACTA (SÓ ÍCONE, SEM TEXTO)
+   ════════════════════════════════════════════════════════════════ */
+
+.theme-toggle.compact {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  justify-content: center;
+}
+
+.theme-toggle.compact .theme-label {
+  display: none;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   RESPONSIVO
+   ════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .theme-toggle {
+    padding: 1rem;
+    font-size: 1rem;
+  }
+  
+  .toggle-icon-wrapper {
+    width: 22px;
+    height: 22px;
+  }
+}

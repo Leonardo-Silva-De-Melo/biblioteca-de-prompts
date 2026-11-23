@@ -1,0 +1,152 @@
+.sobre-container.horizontal-layout {
+  max-width: 1200px; /*  Permite que o card ocupe muito mais espaço lateral */
+  margin: 2rem auto;
+  padding: 0 20px;
+  animation: fadeIn 0.4s ease;
+}
+
+.sobre-card-principal {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08); /* Sombra mais suave */
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.sobre-banner {
+  background: linear-gradient(135deg, #1e3a8a, #3b82f6); /* Degradê DGTI */
+  padding: 30px 40px;
+  color: white;
+}
+
+.sobre-banner h2 {
+  font-size: 2rem;
+  margin-bottom: 4px;
+}
+
+.sobre-conteudo {
+  padding: 30px 40px;
+}
+
+.sobre-texto-destaque {
+  font-size: 1.05rem;
+  color: #334155;
+  line-height: 1.6;
+  max-width: 900px; /* Limita a largura do texto para não ficar cansativo */
+  margin-bottom: 30px;
+}
+
+/* GRID HORIZONTAL (O ponto chave) */
+.sobre-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Cria colunas largas */
+  gap: 1.5rem;
+  margin-bottom: 40px;
+  overflow-x: auto; /* Permite rolagem lateral se a tela for pequena */
+  padding-bottom: 10px; /* Espaço para a barra de rolagem */
+}
+
+/* CARDS (FEATURES) */
+.sobre-feature {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  height: 100%; /* Garante que todos os cards tenham a mesma altura */
+  position: relative;
+}
+
+.sobre-feature:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* Cards em desenvolvimento com estilo visual diferenciado */
+.sobre-feature.card-em-desenvolvimento {
+  border-style: dashed;
+  border-color: #cbd5e1;
+  background: #f1f5f9;
+}
+
+/* ── Selos de Estado ── */
+.selo-estado {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+}
+
+.selo-operacional {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.selo-desenvolvimento {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.feature-icone {
+  width: 45px;
+  height: 45px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.sobre-feature h3 {
+  font-size: 1.1rem;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+.sobre-feature p {
+  font-size: 0.95rem;
+  color: #64748b;
+  line-height: 1.5;
+}
+
+/* Cores dos ícones */
+.icon-purple { background: #f3e8ff; color: #a855f7; }
+.icon-blue   { background: #dbeafe; color: #3b82f6; }
+.icon-green  { background: #dcfce7; color: #10b981; }
+.icon-orange { background: #ffedd5; color: #f97316; }
+.icon-indigo { background: #e0e7ff; color: #6366f1; }
+.icon-pink   { background: #fce7f3; color: #ec4899; }
+
+/* RODAPÉ TÉCNICO HORIZONTAL */
+.sobre-rodape {
+  background: #0f172a; /* Fundo escuro para destacar */
+  padding: 25px 40px;
+  border-radius: 12px;
+  display: flex; /* Transforma o rodapé em duas colunas */
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.rodape-coluna h4 {
+  font-size: 1rem;
+  color: #94a3b8;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.rodape-coluna ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.rodape-coluna li {
+  margin-bottom: 8px;
+  color: #cbd5e1;
+  font-size: 0.95rem;
+}

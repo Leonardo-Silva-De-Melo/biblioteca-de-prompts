@@ -1,0 +1,60 @@
+# =============================================================================
+# BIBLIOTECA DE PROMPTS
+# =============================================================================
+# Este arquivo precisa existir ANTES do primeiro commit — segredo commitado
+# continua no histórico mesmo depois de removido do arquivo.
+
+# ---- Segredos e configuração de ambiente ----
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+*.jks
+
+# ---- Documentos institucionais ----
+# A pasta não vem no repositório: é criada pelo operador na Fase 1 do
+# PASSO_A_PASSO. A regra fica aqui de forma preventiva, porque editais, leis e
+# ofícios podem conter dados pessoais de alunos e servidores (CPF, matrícula,
+# endereço) e não devem ser versionados.
+arquivos_uerj/
+
+# ---- Backups e dumps de banco ----
+# Contêm hashes de senha do Keycloak e todo o histórico de conversas.
+*.dump
+backup_*.sql
+backup_*/
+# data.sql é a carga inicial da aplicação e deve ser versionada.
+!biblioteca-prompts-api/src/main/resources/data.sql
+
+# Bancos H2 em arquivo, de fases anteriores à migração para PostgreSQL.
+# Contêm dados reais e nomes de usuário.
+*.mv.db
+*.trace.db
+biblioteca-prompts-api/data/
+
+# ---- Arquivos de trabalho local ----
+*.bak
+*.orig
+*.rej
+*.rar
+*.zip
+*.7z
+
+# ---- Artefatos de build ----
+node_modules/
+target/
+dist/
+build/
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# ---- Ambiente e ferramentas locais ----
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log

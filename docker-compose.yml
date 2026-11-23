@@ -1,0 +1,346 @@
+# =============================================================================
+# BIBLIOTECA DE PROMPTS — orquestração da stack
+# =============================================================================
+#
+# Serviços:
+#
+#   postgres     PostgreSQL 16 com a extensão pgvector. Armazena os dados da
+#                aplicação, o schema do Keycloak e os embeddings do RAG.
+#   keycloak     Servidor de identidade (SSO/OIDC), com importação de realm.
+#   oidc-proxy   Nginx que normaliza o discovery OIDC entre rede interna do
+#                Docker e navegador.
+#   backend      API REST (Spring Boot / Java 21).
+#   frontend     Interface web (React + Vite), servida por Nginx.
+#   open-webui   Interface de chat com o LLM, integrada ao SSO e ao RAG.
+#   docling      Serviço de extração documental. Converte PDF/DOCX/PPTX em
+#                Markdown estruturado antes do chunking e da indexação.
+#
+# ANTES DE SUBIR: copie .env.example para .env e preencha todas as variáveis.
+# A stack não sobe sem isso — os segredos não têm valor padrão, de propósito.
+# =============================================================================
+
+services:
+
+  postgres:
+    # pgvector/pgvector:pg16 é o PostgreSQL 16 oficial com a extensão vector
+    # pré-compilada. É uma imagem base Debian/glibc; se estiver migrando de uma
+    # imagem Alpine/musl, faça pg_dump ANTES de trocar.
+    image: pgvector/pgvector:pg16
+    container_name: biblioteca-prompts-postgres
+    ports:
+      - "${POSTGRES_PORT:-5433}:5432"
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB:-bibliotecapromptsdb}
+      - POSTGRES_USER=${POSTGRES_USER:-biblioteca_prompts}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:?defina POSTGRES_PASSWORD no .env}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    # Sem healthcheck, os serviços dependentes sobem antes do banco aceitar
+    # conexões e falham na primeira subida.
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-biblioteca_prompts} -d ${POSTGRES_DB:-bibliotecapromptsdb}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    networks:
+      - biblioteca-prompts-network
+    restart: unless-stopped
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: biblioteca-prompts-keycloak
+    ports:
+      - "${KEYCLOAK_PORT:-8180}:8080"
+    environment:
+      - KEYCLOAK_ADMIN=${KEYCLOAK_ADMIN:-admin}
+      - KEYCLOAK_ADMIN_PASSWORD=${KEYCLOAK_ADMIN_PASSWORD:?defina KEYCLOAK_ADMIN_PASSWORD no .env}
+      - KC_DB=postgres
+      - KC_DB_URL=jdbc:postgresql://postgres:5432/${POSTGRES_DB:-bibliotecapromptsdb}
+      - KC_DB_USERNAME=${POSTGRES_USER:-biblioteca_prompts}
+      - KC_DB_PASSWORD=${POSTGRES_PASSWORD:?defina POSTGRES_PASSWORD no .env}
+      - KC_DB_SCHEMA=keycloak
+      - KC_HOSTNAME=${KEYCLOAK_PUBLIC_URL:-http://localhost:8180}
+      - KC_HOSTNAME_STRICT=false
+      - KC_HTTP_ENABLED=true
+      # Substitui o placeholder ${env.OAUTH_CLIENT_SECRET} do realm na importacao.
+      # Precisa ser o mesmo valor usado pelo servico open-webui.
+      - OAUTH_CLIENT_SECRET=${OAUTH_CLIENT_SECRET:?defina OAUTH_CLIENT_SECRET no .env}
+    volumes:
+      - ./keycloak-config:/opt/keycloak/data/import
+    command: start-dev --import-realm
+    depends_on:
+      - postgres
+    networks:
+      - biblioteca-prompts-network
+    restart: unless-stopped
+
+  oidc-proxy:
+    image: nginx:alpine
+    container_name: biblioteca-prompts-oidc-proxy
+    volumes:
+      - ./keycloak-config/nginx-oidc-proxy.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - biblioteca-prompts-network
+    depends_on:
+      - keycloak
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./biblioteca-prompts-api
+    container_name: biblioteca-prompts-backend
+    ports:
+      - "${BACKEND_PORT:-8080}:8080"
+    environment:
+      - DB_URL=jdbc:postgresql://postgres:5432/${POSTGRES_DB:-bibliotecapromptsdb}
+      - DB_USERNAME=${POSTGRES_USER:-biblioteca_prompts}
+      - DB_PASSWORD=${POSTGRES_PASSWORD:?defina POSTGRES_PASSWORD no .env}
+      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL:?defina OLLAMA_BASE_URL no .env}
+      - OLLAMA_MODEL=${OLLAMA_MODEL:-llama3.2:latest}
+      - KEYCLOAK_ISSUER=${KEYCLOAK_PUBLIC_URL:-http://localhost:8180}/realms/biblioteca-prompts
+      - KEYCLOAK_JWKS=http://biblioteca-prompts-keycloak:8080/realms/biblioteca-prompts/protocol/openid-connect/certs
+      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS:-http://localhost:3001,http://localhost:3000,http://localhost:5173}
+    depends_on:
+      - postgres
+      - keycloak
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - biblioteca-prompts-network
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./Front-endFinal/biblioteca-prompts-frontend
+    container_name: biblioteca-prompts-frontend
+    ports:
+      - "${FRONTEND_PORT:-3001}:80"
+    depends_on:
+      - backend
+    networks:
+      - biblioteca-prompts-network
+    restart: unless-stopped
+
+  # ============================ SERVIÇOS DE IA ==============================
+
+  # ---------------------------------------------------------------------------
+  # SERVIÇO OLLAMA LOCAL — DESATIVADO POR PADRÃO
+  # ---------------------------------------------------------------------------
+  # Este serviço vem comentado porque a inferência roda, por padrão, em um host
+  # externo apontado por OLLAMA_BASE_URL (ver .env.example).
+  #
+  # Rodar o Ollama como container só faz sentido se a máquina da stack tiver GPU
+  # NVIDIA com driver instalado. Sem isso, o bloco `deploy.resources` é ignorado
+  # silenciosamente pelo Compose e o Ollama passa a inferir em CPU — o log mostra
+  # `inference compute id=cpu library=cpu`, e o desempenho cai a ponto de
+  # inviabilizar o uso.
+  #
+  # Para ativar: descomente o bloco, confirme que `nvidia-smi` responde no host
+  # e aponte OLLAMA_BASE_URL para http://biblioteca-prompts-ollama:11434.
+  #
+  # ollama:
+  #   image: ollama/ollama:latest
+  #   container_name: biblioteca-prompts-ollama
+  #   ports:
+  #     - "127.0.0.1:11434:11434"
+  #   volumes:
+  #     - ollama-data:/root/.ollama
+  #   environment:
+  #     - OLLAMA_KEEP_ALIVE=30m
+  #     - OLLAMA_FLASH_ATTENTION=1
+  #   networks:
+  #     - biblioteca-prompts-network
+  #   restart: unless-stopped
+  #   deploy:
+  #     resources:
+  #       reservations:
+  #         devices:
+  #           - driver: nvidia
+  #             count: all
+  #             capabilities: [gpu]
+
+  # ---------------------------------------------------------------------------
+  # DOCLING — extração documental
+  # ---------------------------------------------------------------------------
+  # Converte o documento anexado em Markdown estruturado (cabeçalhos, listas,
+  # tabelas) antes de o Open WebUI fatiar e indexar. Para texto normativo isso
+  # importa: o Markdown preserva a hierarquia de artigos e parágrafos, então o
+  # chunk tende a cortar em fronteira de artigo em vez de no meio de uma frase.
+  #
+  # Variante -cpu, não a padrão: a imagem `docling-serve` tem ~8,7 GB porque
+  # embute as bibliotecas CUDA. A `-cpu` tem ~4,4 GB e é a correta em máquina
+  # sem GPU dedicada à inferência. Os modelos de layout e de tabela já vêm
+  # dentro da imagem — não há download na primeira execução.
+  #
+  # Com GPU NVIDIA disponível, troque por
+  # quay.io/docling-project/docling-serve-cu128:latest e acrescente o bloco
+  # `deploy.resources` igual ao do serviço ollama acima.
+  docling:
+    image: quay.io/docling-project/docling-serve-cpu:latest
+    container_name: biblioteca-prompts-docling
+    ports:
+      # Publicada em 127.0.0.1 para permitir conversão manual pela linha de
+      # comando e acesso à UI de teste em http://localhost:5001/ui.
+      # Quem consome em produção é o open-webui, pela rede do Docker.
+      - "127.0.0.1:${DOCLING_PORT:-5001}:5001"
+    environment:
+      # UI de teste em /ui. Útil para validar a conversão de um PDF isolado
+      # sem passar pelo Open WebUI.
+      - DOCLING_SERVE_ENABLE_UI=true
+
+      # OBRIGATORIAMENTE 1. Com mais de um worker, o estado das tarefas fica
+      # dividido entre processos e a conversão falha com "Task Not Found" —
+      # só seria seguro com um backend compartilhado (Redis).
+      - UVICORN_WORKERS=1
+
+      # Teto de espera da conversão síncrona. O padrão derruba documentos
+      # longos por timeout antes de terminarem.
+      - DOCLING_SERVE_MAX_SYNC_WAIT=600
+
+      # Limita o paralelismo interno das bibliotecas numéricas ao que foi
+      # reservado para o container. Sem isso elas assumem todos os núcleos do
+      # host e competem com o Postgres e o Ollama.
+      - OMP_NUM_THREADS=4
+      - MKL_NUM_THREADS=4
+      - DOCLING_SERVE_ENG_LOC_NUM_WORKERS=1
+    # A extração carrega modelos de layout e de tabela em memória. Sem teto, um
+    # PDF grande consome toda a RAM e o kernel mata outro container da stack.
+    mem_limit: 6g
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - biblioteca-prompts-network
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  open-webui:
+    # Imagem oficial, sem build customizado. A extração de documentos é feita
+    # pelo serviço docling, que já traz os próprios extratores — não há nada a
+    # instalar nesta imagem.
+    image: ghcr.io/open-webui/open-webui:${OPEN_WEBUI_TAG:-main}
+    container_name: biblioteca-prompts-open-webui
+    ports:
+      - "${OPEN_WEBUI_PORT:-3000}:8080"
+    environment:
+      # Precisa apontar para o host que tem os modelos de chat baixados.
+      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL:?defina OLLAMA_BASE_URL no .env}
+      - WEBUI_SECRET_KEY=${WEBUI_SECRET_KEY:?defina WEBUI_SECRET_KEY no .env}
+
+      # ---- SSO via Keycloak ----
+      - ENABLE_OAUTH_SIGNUP=true
+      - OAUTH_CLIENT_ID=${OAUTH_CLIENT_ID:-open-webui}
+      - OAUTH_CLIENT_SECRET=${OAUTH_CLIENT_SECRET:?defina OAUTH_CLIENT_SECRET no .env}
+      - OPENID_PROVIDER_URL=http://oidc-proxy/realms/biblioteca-prompts/.well-known/openid-configuration
+      - OAUTH_PROVIDER_NAME=Biblioteca de Prompts SSO
+      - ENABLE_LOGIN_FORM=false
+      # Destino do "Sair". Aponta para o frontend da Biblioteca de Prompts, não
+      # para a tela de login do próprio Open WebUI: o chat é um módulo da
+      # plataforma, e o usuário que sai dele volta para a plataforma.
+      #
+      # Esta é a variável nativa do Open WebUI para isso. Antes, o mesmo efeito
+      # era obtido montando um index.html customizado com um listener de clique
+      # em cima do botão — o que quebrava a interface a cada atualização da
+      # imagem, porque o HTML referenciava chunks de um build antigo.
+      - WEBUI_AUTH_SIGNOUT_REDIRECT_URL=${FRONTEND_PUBLIC_URL:-http://localhost:3001}/?action=logout
+
+      # ---- Extração de documentos via Docling ----
+      # Substitui o extrator interno. O Docling devolve Markdown estruturado,
+      # que preserva tabela e hierarquia de seções — o extrator padrão entrega
+      # texto corrido e perde a estrutura do documento normativo.
+      #
+      # ATENÇÃO: estas três variáveis são PersistentConfig. O valor abaixo é
+      # lido apenas na PRIMEIRA subida e depois passa a viver no banco. Para
+      # alterar numa instalação já existente, use
+      # Admin -> Configurações -> Documentos (mudar aqui não terá efeito).
+      - CONTENT_EXTRACTION_ENGINE=docling
+      - DOCLING_SERVER_URL=http://docling:5001
+
+      # OCR desligado. Os documentos do acervo são PDF de origem digital, com
+      # camada de texto própria; rodar OCR em cima deles custa cerca de dez
+      # vezes mais tempo de indexação e pode sobrepor uma transcrição pior ao
+      # texto nativo, que é exato.
+      #
+      # CONSEQUÊNCIA: um PDF puramente escaneado (imagem, sem camada de texto)
+      # é indexado VAZIO e o Open WebUI reporta sucesso. Não há aviso. Antes de
+      # incluir documento escaneado no acervo, reative o OCR com
+      # DOCLING_DO_OCR=true, DOCLING_OCR_ENGINE=tesseract e DOCLING_OCR_LANG=por.
+      - DOCLING_DO_OCR=false
+
+      # ---- RAG no pgvector, em vez do ChromaDB em arquivo ----
+      # Reaproveita o Postgres que já existe: um mecanismo de persistência a
+      # menos para operar e incluir no backup, e a indexação passa a ser
+      # auditável por SQL.
+      - VECTOR_DB=pgvector
+      - PGVECTOR_DB_URL=postgresql://${POSTGRES_USER:-biblioteca_prompts}:${POSTGRES_PASSWORD:?defina POSTGRES_PASSWORD no .env}@postgres:5432/${POSTGRES_DB:-bibliotecapromptsdb}
+
+      # Embeddings rodam DENTRO deste container (sentence-transformers), não no
+      # Ollama — RAG_EMBEDDING_ENGINE vazio significa motor local. Isso evita
+      # depender de o host de inferência ter um modelo de embedding baixado:
+      # tipicamente ele só tem os modelos de chat, e apontar o RAG para lá
+      # falharia na indexação.
+      #
+      # multilingual-e5-large (~1,1 GB, 1024 dimensões) tem bom desempenho em
+      # português, bem superior ao all-MiniLM-L6-v2 em pt-BR.
+      #
+      # Em CPU a INDEXAÇÃO é lenta, o que é aceitável: acontece uma vez por
+      # documento, e a consulta depois é rápida.
+      #
+      # Em máquina com pouca RAM, uma alternativa é delegar o embedding a um
+      # Ollama que já tenha o bge-m3 baixado (também 1024 dimensões, portanto
+      # compatível com um índice já criado por este modelo):
+      #   RAG_EMBEDDING_ENGINE=ollama
+      #   RAG_EMBEDDING_MODEL=bge-m3:latest
+      # Isso libera cerca de 2 GB de RAM neste container.
+      #
+      # ATENÇÃO: a dimensão do vetor é fixada na primeira indexação. Trocar por
+      # um modelo de dimensão diferente obriga a reindexar o acervo inteiro.
+      - RAG_EMBEDDING_ENGINE=
+      - RAG_EMBEDDING_MODEL=${RAG_EMBEDDING_MODEL:-intfloat/multilingual-e5-large}
+
+      # Busca híbrida: BM25 (literal) + vetorial (semântica), com reranking.
+      # Essencial para documentos normativos — vetores não distinguem
+      # "Edital 042/2024" de "043/2024", que são semanticamente idênticos e
+      # administrativamente opostos. Custo: o reranker em CPU soma 1-3 s por
+      # consulta.
+      - ENABLE_RAG_HYBRID_SEARCH=true
+      - RAG_RERANKING_MODEL=${RAG_RERANKING_MODEL:-BAAI/bge-reranker-v2-m3}
+
+      # Chunk maior que o default (1000/100): 1200 caracteres cabe um artigo com
+      # seus parágrafos, e 300 de sobreposição garante que um artigo cortado no
+      # limite reapareça inteiro no bloco seguinte.
+      - CHUNK_SIZE=${CHUNK_SIZE:-1200}
+      - CHUNK_OVERLAP=${CHUNK_OVERLAP:-300}
+      - RAG_TOP_K=${RAG_TOP_K:-8}
+    volumes:
+      - open-webui-data:/app/backend/data
+    depends_on:
+      postgres:
+        condition: service_healthy
+      oidc-proxy:
+        condition: service_started
+      keycloak:
+        condition: service_started
+      docling:
+        condition: service_started
+    networks:
+      - biblioteca-prompts-network
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  biblioteca-prompts-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
+  open-webui-data:
+  # ollama-data:  # reativar junto com o serviço ollama, se houver GPU local

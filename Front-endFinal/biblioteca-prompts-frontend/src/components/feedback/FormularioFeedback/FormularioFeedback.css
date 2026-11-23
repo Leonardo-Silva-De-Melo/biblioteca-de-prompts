@@ -1,0 +1,131 @@
+.feedback-container {
+  max-width: 600px;
+  margin: 6rem auto 4rem auto;
+  padding: 0 20px;
+  animation: fadeIn 0.4s ease;
+}
+
+.feedback-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.feedback-header {
+  background: linear-gradient(to right, #0ea5e9, #2563eb);
+  padding: 30px 20px;
+  text-align: center;
+  color: white;
+}
+
+.feedback-header h2 {
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+  color: white;
+}
+
+.feedback-header p {
+  color: #e0e7ff;
+  font-size: 1rem;
+}
+
+.feedback-form {
+  padding: 40px;
+}
+
+.feedback-form label {
+  display: block;
+  font-weight: bold;
+  color: #334155;
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+}
+
+.feedback-stars-section {
+  text-align: center;
+  margin-bottom: 40px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.stars-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.star-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  transition: transform 0.2s;
+}
+
+.star-button:hover {
+  transform: scale(1.15);
+}
+
+.stars-label {
+  height: 24px;
+  font-weight: 600;
+  color: #2563eb;
+  font-size: 1.1rem;
+}
+
+.feedback-textarea {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 1rem;
+  color: #1e293b;
+  resize: vertical;
+  transition: border-color 0.3s;
+  font-family: inherit;
+  margin-bottom: 30px;
+}
+
+.feedback-textarea:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.feedback-submit-btn {
+  width: 30%;
+  margin-left: auto;
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 16px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background-color 0.3s, transform 0.1s;
+}
+
+.feedback-submit-btn:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.feedback-submit-btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.feedback-submit-btn:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+.feedback-textarea {
+    color: #ffffff !important; /* Isso garante que o texto digitado seja branco */
+}

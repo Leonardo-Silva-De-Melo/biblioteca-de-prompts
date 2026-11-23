@@ -1,0 +1,333 @@
+.diagnostico-overlay {
+    width: 100%;
+    background-color: transparent; 
+    padding: 0.5rem;
+}
+
+.diagnostico-container {
+    background-color: transparent; 
+    padding: 2rem;
+    width: 100%;
+    max-width: 1000px; 
+    box-shadow: none;
+    border: none;
+    margin: 0 auto; /* Centraliza horizontalmente de forma 100% segura */
+}
+
+.diagnostico-header {
+    text-align: center;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.diagnostico-header h2 {
+    color: var(--text);
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(to right, #60a5fa, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.diagnostico-header p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    line-height: 1.5;
+}
+
+.diagnostico-form .form-section {
+    margin-bottom: 1rem;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.diagnostico-form .form-section h3 {
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+    border-left: 4px solid var(--primary);
+    padding-left: 10px;
+}
+
+.field-group {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.field-group .field {
+    flex: 1;
+}
+
+.field {
+    margin-bottom: 1rem;
+}
+
+.field label {
+    display: block;
+    margin-bottom: 0.75rem;
+    color: var(--text);
+    font-weight: 500;
+}
+
+.mt-3 {
+    margin-top: 1.5rem;
+}
+
+.ml-3 {
+    margin-left: 1rem;
+}
+
+.form-actions {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+}
+
+.form-actions .p-button {
+    font-size: 1.2rem;
+    padding: 1rem 2rem;
+    background: linear-gradient(to right, #10b981, #059669);
+    border: none;
+    transition: transform 0.2s;
+}
+
+.form-actions .p-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.4);
+}
+
+/* Animação do Wizard */
+.fade-in {
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsiveness */
+@media screen and (max-width: 768px) {
+    .field-group {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .diagnostico-container {
+        padding: 1.5rem;
+    }
+}
+
+/* --- ESTILOS PREMIUM PARA OS BOTÕES (UX DESIGN) --- */
+
+.btn-pular {
+    background: transparent !important;
+    border: 1px solid #475569 !important;
+    color: #94a3b8 !important;
+    border-radius: 8px !important;
+    padding: 0.75rem 1.5rem !important;
+    font-weight: 500 !important;
+    transition: all 0.2s ease !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+.btn-pular:hover, .btn-pular:focus {
+    background: rgba(71, 85, 105, 0.2) !important;
+    color: #f8fafc !important;
+    border-color: #64748b !important;
+    box-shadow: none !important;
+    transform: translateY(-1px);
+}
+
+.btn-proximo {
+    background: #3b82f6 !important;
+    border: 1px solid #3b82f6 !important;
+    color: #ffffff !important;
+    border-radius: 8px !important;
+    padding: 0.75rem 2rem !important;
+    font-weight: 600 !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3) !important;
+    outline: none !important;
+}
+
+.btn-proximo:hover, .btn-proximo:focus {
+    background: #2563eb !important;
+    border-color: #2563eb !important;
+    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.5) !important;
+    transform: translateY(-2px);
+}
+
+.btn-proximo:active {
+    transform: translateY(0);
+}
+
+/* --- CORREÇÕES DE COMPONENTES PRIMEREACT --- */
+
+/* 1. MultiSelect: O Tailwind "rouba" o padding. Restaura o texto "Selecione..." */
+.diagnostico-form .p-multiselect .p-multiselect-label {
+    padding: 0.75rem 1rem !important;
+}
+
+/* 2. SelectButton (Iniciante, Intermediário, Avançado): 
+      Por padrao o PrimeReact gruda os botoes; aqui ficam separados como pilulas. */
+.diagnostico-form .p-selectbutton {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.diagnostico-form .p-selectbutton .p-button {
+    flex: 1;
+    border-radius: 8px !important;
+    border: 1px solid var(--border) !important;
+    background: transparent !important;
+    color: var(--text-color) !important;
+    font-weight: 500 !important;
+    transition: all 0.2s ease;
+}
+
+.diagnostico-form .p-selectbutton .p-button.p-highlight {
+    background: rgba(59, 130, 246, 0.2) !important;
+    border-color: #3b82f6 !important;
+    color: #60a5fa !important;
+    box-shadow: none !important;
+}
+
+.diagnostico-form .p-selectbutton .p-button:not(.p-highlight):hover {
+    background: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* 3. Ajuste de espaçamento interno e altura idêntica para todos os Selects */
+.diagnostico-form .p-dropdown,
+.diagnostico-form .p-multiselect {
+    display: flex;
+    align-items: center;
+}
+
+.diagnostico-form .p-dropdown .p-dropdown-label {
+    padding: 0 1.25rem !important;
+    height: 3.5rem !important;
+    display: flex;
+    align-items: center;
+    text-align: left !important;
+}
+
+/* O label do MultiSelect define a altura idêntica */
+.diagnostico-form .p-multiselect .p-multiselect-label {
+    padding: 0.4rem 1.25rem !important;
+    min-height: 3.5rem !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 0.4rem !important;
+    align-items: center;
+    text-align: left !important;
+}
+
+.diagnostico-form .p-dropdown .p-dropdown-trigger,
+.diagnostico-form .p-multiselect .p-multiselect-trigger {
+    width: 3rem !important;
+    height: 3.5rem !important;
+}
+
+/* 4. A CORREÇÃO MESTRA: Força o painel a renderizar exatamente embaixo do input,
+      ignorando completamente os cálculos JS do PrimeReact que quebram com zoom: 85% */
+.diagnostico-form .p-dropdown,
+.diagnostico-form .p-multiselect {
+    position: relative !important;
+}
+
+.diagnostico-form .p-dropdown-panel,
+.diagnostico-form .p-multiselect-panel {
+    position: absolute !important;
+    top: 100% !important;
+    left: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
+    transform: none !important;
+    margin-top: 4px;
+    z-index: 9999 !important;
+}
+
+/* 5. Adiciona o texto "Todos" ao lado do checkbox de marcar tudo (Header do MultiSelect) */
+.p-multiselect-panel .p-multiselect-header {
+    position: relative;
+}
+
+.p-multiselect-panel .p-multiselect-header .p-checkbox {
+    position: relative !important;
+    overflow: visible !important;
+}
+
+.p-multiselect-panel .p-multiselect-header .p-checkbox::after {
+    content: "Todos";
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 0.75rem;
+    color: #f8fafc;
+    font-size: 0.95rem;
+    font-weight: 500;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+/* 6. Corrige o visual dos Chips (Tokens selecionados) no MultiSelect */
+.diagnostico-form .p-multiselect-token {
+    background: rgba(59, 130, 246, 0.2) !important;
+    border-radius: 16px !important;
+    padding: 0.2rem 0.6rem !important;
+    margin: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    color: #60a5fa !important;
+    font-size: 0.85rem !important;
+    border: 1px solid rgba(59, 130, 246, 0.3) !important;
+}
+
+.diagnostico-form .p-multiselect-token-icon {
+    margin-left: 0.5rem !important;
+    font-size: 0.75rem !important;
+    color: #93c5fd !important;
+    cursor: pointer;
+}
+
+.diagnostico-form .p-multiselect-token-icon:hover {
+    color: #ffffff !important;
+}
+
+/* 7. Melhorando a experiência do Textarea */
+.diagnostico-form .p-inputtextarea {
+    border-radius: 8px !important;
+    padding: 1rem !important;
+    background: transparent !important;
+    border: 1px solid var(--border) !important;
+    color: var(--text-color) !important;
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+    transition: all 0.2s ease !important;
+    resize: vertical;
+    min-height: 100px;
+}
+
+.diagnostico-form .p-inputtextarea:hover {
+    border-color: #64748b !important;
+}
+
+.diagnostico-form .p-inputtextarea:focus {
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 1px #3b82f6 !important;
+    outline: none !important;
+    background: rgba(15, 23, 42, 0.4) !important;
+}

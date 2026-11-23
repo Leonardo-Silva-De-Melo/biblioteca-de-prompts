@@ -1,0 +1,44 @@
+{
+  "name": "biblioteca-prompts-frontend",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Biblioteca de Prompts de IA da UERJ - Frontend React",
+  "author": "Leonardo Silva de Melo - DGTI UERJ",
+  "license": "UNLICENSED",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:homolog": "vite build --mode homologacao",
+    "build:prod": "vite build --mode production",
+    "preview": "vite preview",
+    "lint": "eslint . --ext .js,.jsx"
+  },
+  "dependencies": {
+    "axios": "^1.6.5",
+    "chart.js": "^4.5.1",
+    "jspdf": "^4.1.0",
+    "jspdf-autotable": "^5.0.7",
+    "keycloak-js": "^26.2.4",
+    "lucide-react": "^0.575.0",
+    "primeflex": "^4.0.0",
+    "primeicons": "^7.0.0",
+    "primereact": "^10.9.7",
+    "react": "^18.2.0",
+    "react-chartjs-2": "^5.3.1",
+    "react-dom": "^18.2.0",
+    "react-markdown": "^9.0.1",
+    "remark-breaks": "^4.0.0",
+    "remark-gfm": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.48",
+    "@types/react-dom": "^18.2.18",
+    "@vitejs/plugin-react": "^4.2.1",
+    "vite": "^5.0.11"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}

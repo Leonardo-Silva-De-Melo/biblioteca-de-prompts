@@ -1,0 +1,1885 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #1a5490;
+    --primary-dark: #123860;
+    --secondary: #667eea;
+    --accent: #f59e0b;
+    --success: #10b981;
+}
+
+/*  Garante que o Toast do PrimeReact sempre fique no topo absoluto */
+.p-toast {
+    z-index: 99999 !important;
+}
+
+html {
+    zoom: 85%; /* Restaurando o zoom pedido pelo usuário */
+}
+
+body {
+    font-family: 'Sora', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* Header */
+.header {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary) 100%);
+    padding: 2rem 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo-icon {
+    width: 50px;
+    height: 50px;
+    background: white;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.logo-text h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+}
+
+.logo-text p {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.6rem 1.2rem;
+    border-radius: 50px;
+    backdrop-filter: blur(10px);
+}
+
+.user-avatar {
+    width: 35px;
+    height: 35px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.user-info span {
+    color: white;
+    font-weight: 500;
+}
+
+/* Search Bar */
+.search-section {
+    padding: 3rem 0;
+    text-align: center;
+}
+
+.search-box {
+    position: relative;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.search-input {
+    width: 100%;
+    padding: 1.2rem 3.5rem 1.2rem 1.5rem;
+    font-size: 1.1rem;
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    background: var(--card-bg);
+    color: var(--text);
+    font-family: 'Sora', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--secondary);
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+}
+
+.search-input::placeholder {
+    color: var(--text-muted);
+}
+
+.search-icon {
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.3rem;
+    color: var(--text-muted);
+    pointer-events: none;
+}
+
+/* Stats Cards */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0 3rem;
+}
+
+.stat-card {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.2);
+    border-color: var(--secondary);
+}
+
+.stat-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--secondary);
+    margin-bottom: 0.3rem;
+}
+
+.stat-label {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+/* Section Title */
+.section-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    margin-top: 3 rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Categories */
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.category-card {
+    background: linear-gradient(135deg, var(--card-bg) 0%, rgba(102, 126, 234, 0.1) 100%);
+    padding: 2rem;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+
+.category-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--secondary), var(--accent));
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.category-card:hover::before,
+.category-card.active::before {
+    transform: scaleX(1);
+}
+
+.category-card:hover,
+.category-card.active {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(102, 126, 234, 0.3);
+    border-color: var(--secondary);
+}
+
+.category-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.category-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+}
+
+.category-count {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+/* Prompts List */
+.prompts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 3rem;
+}
+
+.prompt-item {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.prompt-item:hover {
+    transform: translateX(8px);
+    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.2);
+    border-color: var(--secondary);
+}
+
+.prompt-info {
+    flex: 1;
+}
+
+.prompt-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+}
+
+.prompt-meta {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.prompt-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.badge {
+    background: rgba(102, 126, 234, 0.2);
+    color: var(--secondary);
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* CTA Section */
+.cta-section {
+    background: linear-gradient(135deg, var(--primary-dark), var(--secondary));
+    padding: 3rem;
+    border-radius: 20px;
+    text-align: center;
+    margin: 4rem 0;
+    box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
+}
+
+.cta-button {
+    background: white;
+    color: var(--primary-dark);
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Sora', sans-serif;
+}
+
+.cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(255, 255, 255, 0.3);
+}
+
+/* Footer */
+.footer {
+    background: var(--card-bg);
+    border-top: 1px solid var(--border);
+    padding: 2rem 0;
+    margin-top: 4rem;
+    text-align: center;
+}
+
+.footer p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.footer strong {
+    color: var(--text);
+}
+
+/* Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal {
+    background: var(--card-bg);
+    border-radius: 24px;
+    max-width: 900px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    border: 1px solid var(--border);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-header {
+    padding: 2rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+    color: var(--text);
+}
+
+.modal-body {
+    padding: 2rem;
+}
+
+.prompt-detail {
+    margin-bottom: 1.5rem;
+}
+
+.prompt-detail h4 {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    margin-bottom: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.prompt-text {
+    background: rgba(102, 126, 234, 0.05);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    color: var(--text);
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-wrap: anywhere; 
+    word-break: break-word;
+}
+
+
+
+/* Loading & Error */
+.loading-container,
+.error-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    gap: 1rem;
+    padding: 2rem;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid var(--border);
+    border-top-color: var(--secondary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.error-icon {
+    font-size: 4rem;
+}
+
+.error-container h2 {
+    color: var(--text);
+    margin-bottom: 0.5rem;
+}
+
+.error-container p {
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+/* No Results */
+.no-results {
+    text-align: center;
+    padding: 4rem 2rem;
+}
+
+.no-results-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.no-results p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary);
+}
+
+/* Modal Tabs */
+.modal-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+    position: sticky;
+    top: 0;
+    z-index: 9;
+}
+
+.tab {
+    flex: 1;
+    padding: 1rem;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-bottom: 2px solid transparent;
+    font-family: 'Sora', sans-serif;
+}
+
+.tab:hover {
+    color: var(--text);
+    background: rgba(102, 126, 234, 0.05);
+}
+
+.tab.active {
+    color: var(--secondary);
+    border-bottom-color: var(--secondary);
+    background: rgba(102, 126, 234, 0.1);
+}
+
+/* Histórico */
+.historico-container,
+.comentarios-container {
+    padding: 1rem 0;
+}
+
+.historico-list,
+.comentarios-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.historico-item {
+    background: rgba(102, 126, 234, 0.05);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+}
+
+.historico-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.historico-versao {
+    font-weight: 600;
+    color: var(--secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+
+.historico-info p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    
+    /* CORREÇÃO PARA "COLAR" O TEXTO NO TÍTULO: */
+    word-break: break-all;    /* Quebra a palavra exatamente onde a linha acaba */
+    white-space: pre-wrap;    /* Mantém os parágrafos se houver */
+    line-height: 1.4;         /* Melhora a leitura */
+}
+
+.badge-current {
+    background: var(--success);
+    color: white;
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.7rem;
+}
+
+.historico-data {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.historico-info {
+    margin-bottom: 1rem;
+}
+
+.historico-info p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.historico-info strong {
+    color: var(--text);
+}
+
+.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+}
+
+
+
+
+
+
+
+
+.novo-comentario {
+    background: rgba(15, 23, 42, 0.4);
+    padding: 1.5rem;
+    border-radius: 16px;
+    border: 1px solid rgba(102, 126, 234, 0.15);
+    margin-bottom: 2rem;
+    transition: all 0.3s ease;
+
+    /* ADICIONE ISSO AQUI: */
+    display: flex;
+    flex-direction: column; /* Garante que fique um embaixo do outro */
+}
+
+/* 2. Adicione essa regra nova para o botão dentro dela */
+.novo-comentario .btn {
+    align-self: flex-end; /* Isso joga o botão para a direita */
+    margin-top: 0.5rem;   /* Um pequeno espaço extra se precisar */
+}
+
+
+
+
+
+/* =================================================================
+   CORREÇÃO FINAL: COMENTÁRIOS E BOTÕES
+   (Hover na caixa + Mobile igual Desktop)
+   ================================================================= */
+
+/* 1. Efeito Hover/Foco na Caixa de Adicionar Comentário */
+.novo-comentario {
+    /* Mantém o estilo base */
+    background: rgba(15, 23, 42, 0.4);
+    padding: 1.5rem;
+    border-radius: 16px;
+    border: 1px solid rgba(102, 126, 234, 0.15);
+    margin-bottom: 2rem;
+    
+    /* Adiciona transição suave */
+    transition: all 0.3s ease;
+}
+
+/* Quando passar o mouse ou clicar dentro */
+.novo-comentario:hover,
+.novo-comentario:focus-within {
+    background: rgba(15, 23, 42, 0.7);      /* Fundo levemente mais destacado */
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); /* Sombra para dar profundidade */
+}
+
+/* 2. Alinhamento dos Botões (Editar/Excluir) */
+.comentario-acoes-bottom {
+    display: flex !important;
+    justify-content: flex-end !important; /* Garante alinhamento à DIREITA */
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+    width: 100%;
+}
+
+/* 3. CORREÇÃO CRÍTICA PARA MOBILE */
+/* Isso força o celular a seguir o mesmo layout do desktop */
+@media (max-width: 768px) {
+    
+    /* Garante que o container dos botões continue em linha (horizontal) */
+    .comentario-acoes-bottom {
+        flex-direction: row !important; 
+        justify-content: flex-end !important;
+    }
+
+    /* Impede que os botões estiquem e ocupem 100% da tela */
+    .comentario-acoes-bottom .btn,
+    .comentario-acoes-bottom button,
+    .comentario-acoes-bottom .btn-acao-comentario {
+        width: auto !important;       /* Tamanho apenas do texto */
+        flex: 0 0 auto !important;    /* Não permite crescer */
+        padding: 6px 14px !important; /* Mantém padding pequeno */
+        margin: 0 !important;         /* Remove margens extras */
+    }
+
+    /* Garante que o fundo do card no mobile seja igual ao desktop */
+    .comentario-item {
+        background: rgba(102, 126, 234, 0.06) !important;
+        border: 1px solid rgba(102, 126, 234, 0.15) !important;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ==================================================================
+   Parte do formulário de comentários (botões de editar e deletar)
+   ================================================================== */
+
+/* 1. Container dos botões: Força alinhar à direita */
+.comentario-acoes-bottom {
+    display: flex !important;
+    width: 100% !important;
+    justify-content: flex-end !important; /* Joga para a direita */
+    gap: 10px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+/* 2. Estilo base dos botões */
+.btn-acao-comentario {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: white !important; /* Garante texto branco */
+    transition: all 0.2s ease;
+}
+
+/* 3. Cores específicas */
+.btn-acao-comentario.editar {
+    background-color: #3b82f6 !important; /* Azul */
+}
+.btn-acao-comentario.editar:hover {
+    background-color: #2563eb !important;
+}
+
+.btn-acao-comentario.deletar {
+    background-color: #ef4444 !important; /* Vermelho */
+}
+.btn-acao-comentario.deletar:hover {
+    background-color: #dc2626 !important;
+}
+
+
+/* Comentários */
+.novo-comentario {
+    background: rgba(102, 126, 234, 0.05);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    margin-bottom: 2rem;
+}
+
+.novo-comentario h4 {
+    margin-bottom: 1rem;
+    color: var(--text);
+    font-size: 1rem;
+}
+
+.comentario-input {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--card-bg);
+    color: var(--text);
+    font-family: 'Sora', sans-serif;
+    font-size: 0.95rem;
+    resize: vertical;
+    margin-bottom: 1rem;
+}
+
+.comentario-input:focus {
+    outline: none;
+    border-color: var(--secondary);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+/* novo */
+.comentario-item {
+    background: rgba(102, 126, 234, 0.06); /* <- ANTES era var(--bg) */
+    padding: 1.2rem 1.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(243, 8, 11, 0.96); /* borda levemente azulada */
+    transition: border-color 0.2s;
+}
+/* novo */
+.comentario-item:hover {
+    border-color: rgba(102, 126, 234, 0.3);
+}
+
+/* Caixa de novo comentário — fundo diferente do item */
+.novo-comentario {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    margin-bottom: 1.5rem;
+}
+
+.comentario-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.7rem;
+}
+
+.comentario-header strong {
+    color: var(--secondary);
+}
+
+.comentario-data {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.comentario-texto {
+    color: var(--text);
+    line-height: 1.6;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 2rem;
+    /* color: var(--text-muted); */
+}
+
+/* Tags */
+.prompt-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.tag {
+    background: rgba(102, 126, 234, 0.2);
+    color: var(--secondary);
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* Btn Success */
+.btn-success {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--success);
+    border: 1px solid var(--success);
+}
+
+.btn-success:hover {
+    background: var(--success);
+    color: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .categories-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .prompt-item {
+        flex-direction: column;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .modal {
+        margin: 1rem;
+        max-height: calc(100vh - 2rem);
+    }
+
+    .modal-tabs {
+        position: static;
+    }
+    
+    
+}
+
+
+/* ============================================
+   CORREÇÃO HEADER MOBILE - FICAR IGUAL DESKTOP
+   ============================================
+   
+   PROBLEMA: No mobile, header fica centralizado com dropdown
+   SOLUÇÃO: Forçar layout horizontal igual desktop
+   
+   ADICIONE NO FINAL DO SEU App.css (ou Header.css)
+   ============================================ */
+
+/* ==========================================
+   FORÇAR LAYOUT DESKTOP EM MOBILE
+   ========================================== */
+
+/* Remover a regra que centraliza em mobile */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: row !important; /* Manter horizontal */
+        gap: 1rem;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    /* Logo e texto - manter lado a lado */
+    .logo {
+        flex-direction: row !important;
+        gap: 0.8rem;
+    }
+    
+    .logo-icon {
+        width: 40px; /* Menor em mobile */
+        height: 40px;
+        font-size: 1.5rem;
+    }
+    
+    .logo-text h1 {
+        font-size: 1.2rem; /* Menor em mobile */
+    }
+    
+    .logo-text p {
+        font-size: 0.75rem; /* Menor em mobile */
+    }
+    
+    /* User info - manter visível */
+    .user-info {
+        padding: 0.5rem 1rem;
+        gap: 0.7rem;
+    }
+    
+    .user-avatar {
+        width: 30px;
+        height: 30px;
+        font-size: 0.8rem;
+    }
+    
+    .user-info span {
+        font-size: 0.85rem;
+    }
+    
+    /* Container - padding menor em mobile */
+    .container {
+        padding: 0 1rem;
+    }
+    
+    /* Header - padding menor */
+    .header {
+        padding: 1rem 0;
+    }
+}
+
+/* ==========================================
+   PARA TELAS MUITO PEQUENAS (<480px)
+   ========================================== */
+
+@media (max-width: 480px) {
+    /* Esconder o texto "Leonardo Silva" em telas muito pequenas */
+    .user-info span {
+        display: none;
+    }
+    
+    /* Só mostrar avatar e inicial */
+    .user-avatar {
+        width: 35px;
+        height: 35px;
+    }
+    
+    /* Logo texto menor */
+    .logo-text h1 {
+        font-size: 1rem;
+    }
+    
+    .logo-text p {
+        display: none; /* Esconder "Biblioteca de Prompts" */
+    }
+    
+    /* Logo icon menor */
+    .logo-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 1.3rem;
+    }
+}
+
+/* ==========================================
+   REMOVER DROPDOWN EM MOBILE
+   ========================================== */
+
+/* O dropdown de usuário não é exibido em telas pequenas. */
+.user-dropdown-mobile {
+    display: none !important;
+}
+
+/* Forçar user-info sempre visível */
+.user-info {
+    display: flex !important;
+}
+
+
+
+/* ============================================
+   CSS PARA BOTÕES DO HISTÓRICO
+   ADICIONE NO FINAL DO App.css
+   ============================================ */
+
+/* Container dos botões de ação do histórico */
+.historico-actions {
+    display: flex;
+    justify-content: flex-end; /* <--- O SEGRED0: Joga para a direita */
+    align-items: center;
+    gap: 0.7rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+    flex-wrap: wrap;
+}
+
+/* Botões pequenos do histórico */
+.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+}
+
+/* Botão de deletar versão - Vermelho */
+.btn-danger {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border: 1px solid #ef4444;
+}
+
+.btn-danger:hover {
+    background: #ef4444;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+}
+
+/* Botão de restaurar - Laranja/Amarelo */
+.btn-warning {
+    background: rgba(245, 158, 11, 0.1);
+    color: #f59e0b;
+    border: 1px solid #f59e0b;
+}
+
+.btn-warning:hover {
+    background: #f59e0b;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+}
+
+/* Botão de ver versão - Azul */
+.btn-primary {
+    background: #667eea;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #1a5490;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+/* Badge "Atual" */
+.badge-current {
+    background: #10b981;
+    color: white;
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    margin-left: 0.5rem;
+}
+
+/* Responsive - Mobile */
+@media (max-width: 768px) {
+    .historico-actions {
+        flex-direction: column;
+    }
+    
+    .historico-actions .btn {
+        width: 100%;
+    }
+}
+
+
+/* ================================================
+   SEÇÃO DE IMPACTO / RESULTADOS
+   ================================================ */
+
+.impact-section {
+  margin-top: 3rem;
+  margin-bottom: 4rem;
+}
+
+.impact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.impact-card {
+  background: var(--card-bg); /* Fundo escuro do seu tema */
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.impact-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Header do Card */
+.impact-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+
+.impact-icon {
+  font-size: 1.2rem;
+}
+
+.impact-title {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* Valor Grande */
+.impact-value {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  line-height: 1;
+}
+
+/* Texto descritivo */
+.impact-subtexto {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+
+/* Barra de Progresso */
+.impact-progress-bg {
+  width: 100%;
+  height: 8px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.impact-progress-fill {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 1s ease-in-out;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+
+
+
+
+/* ─────────────────────────────────────────────────
+   2. ACTION BUTTONS DO MODAL (Copiar/Útil/Editar/Excluir)
+   ───────────────────────────────────────────────── */
+
+.action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 1.8rem;
+    flex-wrap: wrap;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+}
+
+/* ─────────────────────────────────────────────────
+   3. BOTÕES DO HISTÓRICO
+   ───────────────────────────────────────────────── */
+
+.historico-actions {
+    display: flex;
+    justify-content: flex-end; /* Alinha à direita */
+    gap: 0.6rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px dashed rgba(255, 255, 255, 0.08);
+    flex-wrap: wrap;
+}
+
+/* ─────────────────────────────────────────────────
+   4. BOTÕES DE COMENTÁRIO (Editar/Excluir)
+   Substitui .btn-acao-comentario
+   ───────────────────────────────────────────────── */
+
+.comentario-acoes-bottom {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 0.8rem;
+    padding-top: 0.8rem;
+    border-top: 1px dashed rgba(255, 255, 255, 0.08);
+}
+
+/* Os botões de comentário AGORA usam .btn .btn-sm */
+/* Remova as classes .btn-acao-comentario antigas */
+
+/* ─────────────────────────────────────────────────
+   5. CORREÇÃO DA COR DO COMENTÁRIO
+   O problema: .comentario-item usa var(--bg) que
+   é quase igual ao fundo da modal
+   ───────────────────────────────────────────────── */
+
+.comentario-item {
+    background: rgba(102, 126, 234, 0.06); /* <- ANTES era var(--bg) */
+    padding: 1.2rem 1.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(102, 126, 234, 0.15); /* borda levemente azulada */
+    transition: border-color 0.2s;
+}
+
+.comentario-item:hover {
+    border-color: rgba(102, 126, 234, 0.3);
+}
+
+/* Caixa de novo comentário — fundo diferente do item */
+.novo-comentario {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column; /* Garante que os itens fiquem um embaixo do outro */
+}
+
+/* ─────────────────────────────────────────────────
+   6. BOTÃO DE RELATÓRIO NO HEADER
+   Adicione ao lado do user-info no Header.jsx
+   ───────────────────────────────────────────────── */
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.btn-relatorio:hover {
+    background: rgba(255, 255, 255, 0.22);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-1px);
+}
+
+/* ─────────────────────────────────────────────────
+   7. RESPONSIVO — botões empilham em mobile
+   ───────────────────────────────────────────────── */
+
+
+   /* Garante que no mobile eles continuem na direita e lado a lado */
+@media (max-width: 768px) {
+    .historico-actions {
+        flex-direction: row !important;
+        justify-content: flex-end !important;
+    }
+
+    .historico-actions .btn, 
+    .historico-actions .btn-sm {
+        width: auto !important; /* Impede botão gigante */
+        flex: 0 0 auto !important;
+        margin-bottom: 0 !important;
+    }
+}
+
+   @media (max-width: 600px) {
+    .action-buttons {
+        flex-direction: column;
+    }
+    .action-buttons .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    .historico-actions {
+        flex-direction: column;
+    }
+    .historico-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+
+
+/* ═══════════════════════════════════════════════════════════
+   COMENTÁRIOS — VISUAL IDÊNTICO MOBILE E DESKTOP
+   ═══════════════════════════════════════════════════════════ */
+
+/* Container de comentários */
+.comentarios-container {
+    padding: 1rem 0;
+}
+
+/* ─── Caixa "Adicionar Comentário" ─── */
+.novo-comentario {
+    background: rgba(42, 15, 42, 0); /* fundo escuro semi-transparente */
+    padding: 1.5rem;
+    border-radius: 16px;
+    border: 1px solid rgba(102, 126, 234, 0.15);
+    margin-bottom: 1.5rem;
+}
+
+.novo-comentario h4 {
+    color: #e2e8f0; /* branco */
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* ─── Textarea ─── */
+.comentario-input {
+    width: 100%;
+    padding: 0.9rem 1.1rem;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    background: rgba(15, 23, 42, 0.8); /* fundo bem escuro */
+    color: #e2e8f0;
+    font-family: 'Sora', sans-serif;
+    font-size: 0.95rem;
+    resize: vertical;
+    margin-bottom: 1rem;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.comentario-input:focus {
+    outline: none;
+    border-color: #667eea;
+    background: rgba(15, 23, 42, 0.95);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.comentario-input::placeholder {
+    color: #94a3b8;
+}
+
+/* ─── Botão Comentar dentro da caixa ─── */
+.novo-comentario .btn {
+    width: auto; /* não ocupa 100% */
+}
+
+/* ─── Cards de Comentários ─── */
+.comentarios-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+}
+
+.comentario-item {
+    background: rgba(102, 126, 234, 0.06);
+    padding: 1.2rem 1.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(102, 126, 234, 0.15);
+    transition: border-color 0.2s;
+}
+
+.comentario-item:hover {
+    border-color: rgba(102, 126, 234, 0.3);
+}
+
+/* ─── Header do comentário ─── */
+.comentario-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.7rem;
+}
+
+.comentario-header strong {
+    color: #667eea;
+    font-size: 0.95rem;
+}
+
+.comentario-data {
+    color: #94a3b8;
+    font-size: 0.82rem;
+}
+
+/* ─── Texto do comentário ─── */
+.comentario-texto {
+    color: #e2e8f0;
+    line-height: 1.65;
+    font-size: 0.92rem;
+}
+
+/* ─── Botões de ação do comentário ─── */
+.comentario-acoes-bottom {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 0.9rem;
+    padding-top: 0.9rem;
+    border-top: 1px dashed rgba(255, 255, 255, 0.08);
+}
+
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: 2.5rem 1rem;
+    color: #94a3b8;
+    font-size: 0.95rem;
+}
+
+.empty-state {
+    border: none !important;       
+    background: transparent !important; 
+    box-shadow: none !important;    
+}
+
+
+
+
+/* IA LOCAL */
+.ia-container {
+  padding: 1rem 0;
+}
+
+.ia-status {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.8rem 1.2rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.ia-status.ok {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid var(--success);
+  color: var(--success);
+}
+
+.ia-status.fail {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid #ef4444;
+  color: #ef4444;
+}
+
+.ia-form {
+  margin-bottom: 1.5rem;
+}
+
+.ia-textarea {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Sora', sans-serif;
+  font-size: 0.95rem;
+  resize: vertical;
+  margin-bottom: 1rem;
+  transition: all 0.3s;
+}
+
+.ia-textarea:focus {
+  outline: none;
+  border-color: var(--secondary);
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+}
+
+.ia-textarea:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ia-resultado {
+  background: rgba(16, 185, 129, 0.05);
+  border: 1px solid var(--success);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+  animation: slideUp 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .template-fields {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+
+/* Container da mensagem de vazio */
+.fav-empty-state-mini {
+    grid-column: 1 / -1;
+    background: var(--bg-secondary);
+    border: 2px dashed var(--border);
+    border-radius: 16px;
+    padding: 2.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+/* O Botão/Link principal */
+.btn-call-to-favorito {
+    background: transparent;
+    border: none;
+    color: var(--primary); /* Azul dinâmico para o texto base */
+    cursor: pointer;
+    font-size: 1.05rem;
+    font-weight: 500;
+    padding: 10px 20px;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+}
+
+.btn-call-to-favorito:hover {
+    background: rgba(59, 130, 246, 0.1);
+    transform: translateY(-2px);
+}
+
+/* O destaque em vermelho */
+.highlight-text {
+    color: #ef4444; /* Vermelho vibrante */
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 5px;
+}
+
+/* Animação de pulso no coração dentro do texto */
+.pulse-heart-inline {
+    animation: pulse-red 1.5s infinite;
+}
+
+@keyframes pulse-red {
+    0% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(239, 68, 68, 0)); }
+    50% { transform: scale(1.2); filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.5)); }
+    100% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(239, 68, 68, 0)); }
+}
+
+
+
+/* ==========================================================================
+   ESTILOS: ACESSO RÁPIDO AOS FAVORITOS (HOME)
+   ========================================================================== */
+
+/* 1. Organiza os favoritos em colunas */
+.quick-favs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+    margin-top: 10px;
+}
+
+/* 2. Estilo do Card Mini */
+.fav-mini-card {
+    background: var(--card-bg); /* Usa a cor do seu tema #1e293b */
+    border: 1px solid var(--border);
+    padding: 12px 16px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.fav-mini-card:hover {
+    background: #232f42;
+    transform: translateY(-3px);
+    border-color: var(--secondary);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* 3. Estilo do Ícone (o quadrado azulado atrás do emoji) */
+.fav-mini-icon {
+    background: rgba(102, 126, 234, 0.1);
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* 4. Organização do Texto interno */
+.fav-mini-info {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+}
+
+.fav-mini-info strong { 
+    display: block; 
+    color: var(--text); 
+    font-size: 0.95rem; 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+.fav-mini-info span { 
+    font-size: 0.75rem; 
+    color: var(--text-muted); 
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+
+
+
+/* Botão "Ver Todos" com destaque visual */
+.btn-ver-todos-destaque {
+    background: rgba(59, 130, 246, 0.1); /* Fundo azul bem suave */
+    color: #60a5fa; /* Azul claro vibrante */
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    padding: 8px 18px;
+    border-radius: 30px; /* Formato de pílula */
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-ver-todos-destaque:hover {
+    background: #3b82f6; /* Azul sólido no hover */
+    color: white;
+    border-color: #3b82f6;
+    transform: scale(1.05); /* Leve aumento */
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+}
+
+.btn-ver-todos-destaque:active {
+    transform: scale(0.98);
+}
+
+/*  CONTAINER PAI: Afasta dos cards superiores */
+.search-container-right {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin: 5rem 0 2rem 0; 
+}
+
+/*  BOX DA BUSCA: Agora com padding e alinhamento reforçado */
+.search-box-modern {
+    display: flex;
+    align-items: center;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 0 1.2rem;
+    width: 400px;
+    height: 50px;
+    transition: all 0.3s ease;
+}
+
+/*  ÍCONE: O segredo para separar está aqui no margin-right */
+.search-icon-left {
+    color: var(--text-muted);
+    flex-shrink: 0;
+    margin-right: 15px !important; /* ISSO VAI FORÇAR A SEPARAÇÃO */
+}
+
+/*  INPUT: Limpo, sem linha azul e sem bordas internas */
+.search-input-modern {
+    background: transparent !important;
+    border: none !important;
+    outline: none !important; /* Mata a linha azul de foco */
+    box-shadow: none !important; 
+    color: var(--text);
+    font-family: 'Sora', sans-serif;
+    font-size: 0.95rem;
+    width: 100%;
+    padding: 0;
+}
+
+.search-input-modern::placeholder {
+    color: var(--text-muted);
+    opacity: 0.7;
+}
+
+/*  ESTILO DE FOCO NA BARRA TODA */
+.search-box-modern:focus-within {
+    border-color: #3b82f6; 
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* --- PAGINAÇÃO (ESTILO GLOBAL PARA PRIMEREACT) --- */
+.p-paginator {
+    background: var(--card-bg) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 12px !important;
+    padding: 0.75rem !important;
+    margin-top: 2rem !important;
+}
+
+.p-paginator .p-paginator-pages .p-paginator-page,
+.p-paginator .p-paginator-first,
+.p-paginator .p-paginator-prev,
+.p-paginator .p-paginator-next,
+.p-paginator .p-paginator-last {
+    color: var(--text-muted) !important;
+    background: transparent !important;
+    border: none !important;
+    transition: all 0.2s !important;
+    min-width: 2.5rem !important;
+    height: 2.5rem !important;
+    border-radius: 8px !important;
+}
+
+.p-paginator .p-paginator-element:hover:not(.p-highlight) {
+    background: var(--bg-hover) !important;
+    color: var(--primary) !important;
+}
+
+.p-paginator .p-paginator-page.p-highlight {
+    background: var(--primary) !important;
+    color: white !important;
+    font-weight: 700 !important;
+}
+
+@media (max-width: 768px) {
+    .search-box-modern {
+        width: 100%;
+    }
+}
+
+

@@ -1,0 +1,273 @@
+/* --- VARIÁVEIS E BASE --- */
+:root {
+  --bg-deep: var(--bg);
+  --bg-card-surface: var(--card-bg);
+  --text-primary: var(--text);
+  --text-secondary: var(--text-secondary);
+  /* Sombras suaves para profundidade */
+  --shadow-premium: var(--shadow-md);
+  --shadow-hover: var(--shadow-lg);
+}
+
+.dashboard-premium-wrapper {
+  padding: 3rem;
+  background: var(--bg); /* Fundo limpo que respeita o tema */
+  min-height: 100vh;
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* --- CABEÇALHO IMPONENTE --- */
+.header-premium {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end; /* Alinha o botão com a base do texto */
+  margin-bottom: 4rem; /* Muito respiro */
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.header-content h1 {
+  font-size: 1.rem; font-weight: 900; letter-spacing: -1px; margin: 0 0 0.5rem 0;
+  display: flex; align-items: center;
+}
+.header-content p { color: var(--text-secondary); font-size: 1.1rem;color:#ffffff; }
+.glow-icon {margin: 0; }
+.glow-icon { filter: drop-shadow(0 0 8px rgba(96, 165, 250, 0.6)); }
+
+/* Botão Ciano Premium */
+.btn-cyan-premium.p-button {
+  background: linear-gradient(135deg, #22d3ee, #06b6d4) !important;
+  border: none !important;
+  color: #0f172a !important;
+  font-weight: 700 !important;
+  padding: 14px 32px !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 20px rgba(34, 211, 238, 0.4) !important;
+  transition: all 0.3s ease !important;
+}
+.btn-cyan-premium.p-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(34, 211, 238, 0.6) !important;
+}
+
+/* --- KPIs DE ALTO IMPACTO --- */
+.kpi-premium-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Cards mais largos */
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+/* Estilo Base dos Cards PrimeReact */
+.p-card.kpi-card-premium, .p-card.chart-card-premium, .p-card.footer-card-premium {
+  background: var(--bg-card-surface) !important;
+  border: 1px solid rgba(255, 255, 255, 0.04) !important;
+  border-radius: 24px !important; /* Bordas bem arredondadas */
+  box-shadow: var(--shadow-premium) !important;
+  transition: all 0.3s ease;
+}
+.p-card.kpi-card-premium:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover) !important; }
+
+.kpi-body-premium { display: flex; align-items: center; gap: 1.5rem; padding: 1.5rem; }
+.kpi-text-premium { display: flex; flex-direction: column; gap: 2px; }
+
+/* Tipografia Gigante */
+.kpi-value-giant { font-size: 2.75rem; font-weight: 900; line-height: 1; letter-spacing: -1px; }
+.kpi-label-premium { color: var(--text-secondary); font-weight: 600; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* Ícones "Glass" */
+.kpi-icon-premium {
+  width: 68px; height: 68px; border-radius: 18px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.kpi-icon-premium i { font-size: 1.8rem; }
+.bg-blue-glass { background: rgba(59, 130, 246, 0.15); color: #60a5fa; box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.2); }
+.bg-purple-glass { background: rgba(168, 85, 247, 0.15); color: #c084fc; box-shadow: inset 0 0 0 1px rgba(168, 85, 247, 0.2); }
+.bg-teal-glass { background: rgba(20, 184, 166, 0.15); color: #2dd4bf; box-shadow: inset 0 0 0 1px rgba(20, 184, 166, 0.2); }
+.bg-orange-glass { background: rgba(249, 115, 22, 0.15); color: #fb923c; box-shadow: inset 0 0 0 1px rgba(249, 115, 22, 0.2); }
+
+/* --- KPI HERÓI (ROI) --- */
+.p-card.kpi-hero-roi {
+  background: linear-gradient(145deg, var(--success-bg) 0%, var(--card-bg) 100%) !important;
+  border-color: var(--success) !important;
+  position: relative; overflow: hidden;
+}
+.bg-emerald-glass { background: rgba(16, 185, 129, 0.2); color: #34d399; box-shadow: inset 0 0 0 1px rgba(16, 185, 129, 0.3); }
+.glow-emerald { filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.5)); }
+/* Efeito de luz de fundo */
+.roi-bg-effect {
+    position: absolute; top: -50%; right: -50%; width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.2) 0%, transparent 70%);
+    filter: blur(40px); pointer-events: none;
+}
+
+/* --- GRÁFICOS --- */
+.charts-premium-grid {
+  display: grid; grid-template-columns: 1.4fr 0.6fr; /* Barra bem mais larga */
+  gap: 2.5rem; margin-bottom: 4rem;
+}
+.chart-container-premium { height: 380px; padding: 10px 0; }
+.card-title-premium { display: flex; align-items: center; gap: 12px; font-size: 1.25rem; font-weight: 700; }
+.p-card .p-card-title { padding: 1.5rem 1.5rem 0 1.5rem !important; }
+
+/* --- RODAPÉ ESTRATÉGICO --- */
+.footer-premium-stack { display: flex; flex-direction: column; gap: 3rem; }
+
+/* Ranking Pódio */
+.ranking-podium-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.5rem; border-radius: 16px; background: rgba(255, 255, 255, 0.02);
+    margin-bottom: 1rem; border: 1px solid transparent; transition: all 0.2s;
+}
+.ranking-podium-item:hover { border-color: rgba(96, 165, 250, 0.3); background: rgba(96, 165, 250, 0.05); }
+.podium-badge {
+    width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+    font-weight: 900; font-size: 1.2rem;
+}
+.usage-pill { background: rgba(59, 130, 246, 0.1); color: #60a5fa; padding: 6px 16px; border-radius: 99px; font-weight: 700; }
+
+/* Timeline Atividades */
+.timeline-marker {
+    width: 36px; height: 36px; border-radius: 50%; background: var(--bg-secondary); border: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center; color: var(--text-secondary);
+}
+
+/* --- RESPONSIVIDADE --- */
+@media (max-width: 1024px) {
+  .charts-premium-grid { grid-template-columns: 1fr; }
+
+  .header-content p { color: var(--text-secondary); font-size: 1.1rem;color:#ffffff; }
+.glow-icon {margin: 0; }
+.glow-icon { filter: drop-shadow(0 0 8px rgba(96, 165, 250, 0.6)); }
+}
+@media (max-width: 768px) {
+  .dashboard-premium-wrapper { padding: 1.5rem; }
+  .header-premium { flex-direction: column; gap: 2rem; align-items: flex-start; }
+  .btn-cyan-premium.p-button { width: 100%; }
+  .kpi-value-giant { font-size: 2.2rem; }
+  .ranking-podium-item { flex-direction: column; align-items: flex-start; gap: 1rem; }
+
+  .header-content p { color: var(--text-secondary); font-size: 1.1rem;color:#ffffff; }
+.glow-icon {margin: 0; }
+.glow-icon { filter: drop-shadow(0 0 8px rgba(96, 165, 250, 0.6)); }
+}
+
+
+
+/* --- SIDEBAR LATERAL FIXA --- */
+/* Sidebar Lateral - Fixa na Direita */
+.sidemenu-container {
+    position: fixed;
+    top: 0;
+    right: -320px; /* Escondido fora da tela à direita */
+    width: 300px;  /* Largura fixa do menu */
+    height: 100vh; /* Ocupa toda a altura da tela */
+    background-color: var(--card-bg, #1e293b); /* Adapta ao tema */
+    z-index: 3000; /* Fica por cima de tudo */
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Classe aplicada quando o menu está aberto */
+.sidemenu-container.open {
+    right: 0; /* Cola no canto direito */
+}
+
+/* Overlay Escuro (Fundo) */
+.sidemenu-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(2px);
+    z-index: 2999;
+    display: none;
+}
+
+.sidemenu-overlay.active {
+    display: block;
+}
+
+/* --- ESTILO INTERNO (image_2601fd) --- */
+.sidemenu-header {
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border, rgba(255, 255, 255, 0.05));
+}
+
+.sidemenu-title {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--primary, #60a5fa);
+}
+
+.sidemenu-close {
+    background: var(--bg, #475569);
+    border: none;
+    color: var(--text, white);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.sidemenu-nav {
+    padding: 1rem 0;
+    flex: 1; /* Faz a navegação ocupar o espaço central */
+}
+
+.sidemenu-item {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary, #cbd5e1);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    font-family: 'Sora', sans-serif;
+    font-size: 1rem;
+    transition: 0.2s;
+    text-align: left;
+}
+
+.sidemenu-item:hover {
+    background: var(--hover-bg, rgba(255, 255, 255, 0.03));
+    color: var(--text, white);
+}
+
+.sidemenu-item.active {
+    background: var(--info-bg, rgba(96, 165, 250, 0.1));
+    color: var(--text, white);
+    border-left: 4px solid var(--info, #60a5fa);
+}
+
+/* Rodapé do Menu (DGTI - UERJ) */
+.sidemenu-footer {
+    padding: 1.5rem;
+    border-top: 1px solid var(--border, rgba(255, 255, 255, 0.05));
+    background: var(--bg-secondary, rgba(0, 0, 0, 0.1));
+}
+
+.sidemenu-footer p {
+    color: var(--text-secondary, #94a3b8);
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.sidemenu-footer small {
+    color: var(--text-disabled, #64748b);
+    font-size: 0.8rem;
+}
+
+
+
